@@ -1,6 +1,6 @@
 name: nocturne-notes
-base: core22
-version: '0.1.0'
+base: core24
+version: '1.0.0'
 summary: Secure, lightweight, encrypted note-taking application.
 description: |
   Nocturne Notes is a minimalist, secure note-taking application for Linux.
@@ -12,7 +12,7 @@ confinement: strict
 
 apps:
   nocturne-notes:
-    command: desktop-launch $SNAP/bin/nocturne_notes
+    command: desktop-launch $SNAP/bin/nocturne-notes
     extensions: [gnome]
     plugs:
       - home
