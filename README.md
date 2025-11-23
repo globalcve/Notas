@@ -173,7 +173,7 @@ rm ~/.config/nocturne_notes/notes.dat
 
 💡 **Pro tip:** Export your notes regularly as encrypted backups!
 
-For detailed instructions, see [docs/PASSWORD_RESET.md](docs/PASSWORD_RESET.md)
+For detailed instructions, see [PASSWORD_RESET.md](PASSWORD_RESET.md)
 
 ---
 
