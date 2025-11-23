@@ -357,9 +357,7 @@ Built with:
 - [tokio](https://tokio.rs/) - Async runtime
 
 Inspired by:
-- Standard Notes (but simpler)
-- Joplin (but lighter)
-- Every note app that wanted my email address
+- Every note app that wanted my email address, had ads, had tracking, or needed internet , and had no encryption.
 
 ---
 
@@ -373,7 +371,7 @@ Inspired by:
 ---
 
 <p align="center">
-Made with ☕ and 🦀 because I needed a damn note app that just works.
+Made because I needed a damn note app that just works. 
 </p>
 
 <p align="center">
