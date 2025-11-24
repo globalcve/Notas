@@ -1,6 +1,6 @@
 [package]
 name = "nocturne_notes"
-version = "0.1.1"
+version = "1.5.0"
 edition = "2021"
 license = "MIT"
 description = "Secure, lightweight, encrypted note-taking application."
@@ -11,8 +11,11 @@ maintainer = "JEGLY"
 section = "utils"
 priority = "optional"
 assets = [
-    ["target/release/nocturne_notes", "usr/bin/", "755"],
+    # Install binary with dash name to match .desktop Exec
+    ["target/release/nocturne_notes", "usr/bin/nocturne-notes", "755"],
+    # Desktop entry
     ["nocturne-notes.desktop", "usr/share/applications/", "644"],
+    # Icon
     ["nocturne-notes.svg", "usr/share/icons/hicolor/scalable/apps/", "644"],
 ]
 
