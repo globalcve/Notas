@@ -24,18 +24,18 @@ If you can still unlock the app:
 
 The encrypted notes are stored at:
 ```bash
-~/.config/nocturne_notes/notes.dat
+~/.local/share/nocturne_notes/notes.dat
 ```
 
 To reset your password, delete this file:
 
 ```bash
-rm ~/.config/nocturne_notes/notes.dat
+rm ~/.local/share/nocturne_notes/notes.dat
 ```
 
 Or delete the entire config directory:
 ```bash
-rm -rf ~/.config/nocturne_notes/
+rm ~/.local/share/nocturne_notes/notes.dat
 ```
 
 ### 3. Restart the Application
@@ -55,7 +55,7 @@ If you exported your notes in step 1:
 ## File Locations
 
 ### Linux
-- **Database:** `~/.config/nocturne_notes/notes.dat`
+- **Database:** `~/.local/share/nocturne_notes/notes.dat`
 - **Exports:** Wherever you save them (default: `~/notes_export.dat`)
 
 ### What's Stored
@@ -113,27 +113,5 @@ A: Not directly, but you can:
 A: Click "Export Notes" regularly. The export file is encrypted and portable.
 
 ---
-
-## Adding a Password Reset Feature (Future)
-
-If you'd like to contribute a password reset feature to the project, here's what would be needed:
-
-1. **Change Password Dialog:**
-   - Ask for current password
-   - Ask for new password
-   - Decrypt all notes with current password
-   - Re-encrypt with new password
-   - Save to database
-
-2. **Menu Item:**
-   - Add "Settings" or "Security" menu
-   - "Change Master Password" option
-
-3. **Implementation:**
-   - Verify current password
-   - Decrypt notes in memory
-   - Re-encrypt with new password
-   - Update the salt
-   - Write to file
 
 Pull requests welcome! 🎉
