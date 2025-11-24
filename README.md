@@ -92,7 +92,7 @@ cargo build --release
 
 **Run:**
 ```bash
-./target/release/nocturne_notes
+./target/release/nocturne-notes
 ```
 
 **Build .deb package:**
