@@ -24,6 +24,10 @@ I built this because I couldn't find a decent note app that checked all the boxe
 So here it is. Simple notes, strong encryption, zero nonsense.
 
 ---
+> ⚠️ Upgrading from versions prior to 1.5.0:  
+> Old notes were stored in `~/.config/nocturne_notes/notes.dat`.  
+> If you want to reset your master password, delete that file and start fresh.
+
 
 ## ✨ Features
 
