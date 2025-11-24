@@ -11,7 +11,7 @@ Nocturne Notes uses **AES-256-GCM** encryption with **Argon2** key derivation to
 - ✅ Export files
 
 ### What's NOT Encrypted
-- ❌ Database file location (`~/.config/nocturne_notes/notes.dat`)
+- ❌ Database file location (`~/.local/share/nocturne_notes/notes.dat`)
 - ❌ Application binary
 
 ---
@@ -36,7 +36,7 @@ Nocturne Notes uses **AES-256-GCM** encryption with **Argon2** key derivation to
 
 ### Where Your Data Lives
 ```
-~/.config/nocturne_notes/notes.dat
+~/.local/share/nocturne_notes/notes.dat
 ```
 
 This file contains:
@@ -47,7 +47,7 @@ This file contains:
 ### File Permissions
 The app creates the config directory with standard user permissions:
 ```bash
-~/.config/nocturne_notes/   (700 - owner only)
+~/.local/share/nocturne_notes/notes.dat   (700 - owner only)
 notes.dat                    (600 - owner read/write)
 ```
 
@@ -62,7 +62,7 @@ notes.dat                    (600 - owner read/write)
 If you've forgotten your password, you must delete the database:
 
 ```bash
-rm ~/.config/nocturne_notes/notes.dat
+rm ~/.local/share/nocturne_notes/notes.dat
 ```
 
 **This permanently deletes all notes.**
@@ -124,10 +124,8 @@ See [PASSWORD_RESET.md](docs/PASSWORD_RESET.md) for detailed instructions.
 
 **Please DO NOT open a public issue for security vulnerabilities.**
 
-Instead, email: [your-email@example.com]
+Instead, email: globalcve@gmail.com
 
-Or open a private security advisory:
-https://github.com/globalcve/NocturneNotes/security/advisories/new
 
 ### What to Include
 - Description of the vulnerability
@@ -200,7 +198,7 @@ If you need:
 - Commercial support
 - Custom security features
 
-Please contact: [your-business-email@example.com]
+Please contact: globalcve@gmail.com
 
 ---
 
@@ -239,8 +237,6 @@ See [LICENSE](LICENSE) for full terms.
 
 ## Questions?
 
-- 💬 Open a [Discussion](https://github.com/globalcve/NocturneNotes/discussions)
-- 📖 Read the [Documentation](docs/)
 - 🐛 Report bugs: [Issues](https://github.com/globalcve/NocturneNotes/issues)
 - 🔒 Security: Email privately (see above)
 
