@@ -114,12 +114,6 @@ sudo dpkg -i target/debian/nocturne-notes_*.deb
 - **Export Notes** - Save encrypted backup to any location
 - **Import Notes** - Restore from encrypted backup
 
-### Keyboard Shortcuts
-- `Ctrl+C` - Copy selected text
-- `Ctrl+V` - Paste text
-- `Ctrl+X` - Cut selected text
-- `Ctrl+A` - Select all text
-
 ---
 
 ## 🔐 Security & Privacy
@@ -138,8 +132,9 @@ sudo dpkg -i target/debian/nocturne-notes_*.deb
 ✅ Export files  
 
 ### What's NOT Encrypted
-❌ Database file location (`~/.config/nocturne_notes/notes.dat`)  
+❌ Database file location (`~/.local/share/nocturne_notes/notes.dat`)  
 ❌ Application binary  
+
 
 ### Privacy Guarantees
 - **No telemetry** - We don't track anything
@@ -158,7 +153,7 @@ For more details, see [SECURITY.md](SECURITY.md)
 
 ### To reset:
 ```bash
-rm ~/.config/nocturne_notes/notes.dat
+rm ~/.local/share/nocturne_notes/notes.dat
 ```
 
 ⚠️ **This permanently deletes all your notes!**
@@ -169,7 +164,7 @@ rm ~/.config/nocturne_notes/notes.dat
 3. Restart Nocturne Notes with a new password
 4. **Import your notes** (you'll need the old password for the export file)
 
-**Database location:** `~/.config/nocturne_notes/notes.dat`
+**Database location:** `~/.local/share/nocturne_notes/notes.dat`
 
 💡 **Pro tip:** Export your notes regularly as encrypted backups!
 
@@ -208,7 +203,7 @@ nocturne_notes/
 2. Argon2 derives a 256-bit key from your password + random salt
 3. Notes are serialized with `bincode`
 4. Encrypted with AES-256-GCM + random nonce
-5. Saved to `~/.config/nocturne_notes/notes.dat`
+5. Saved to `~/.local/share/nocturne_notes/notes.dat`
 
 When you unlock:
 1. Your password + stored salt → same 256-bit key
