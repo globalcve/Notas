@@ -1,4 +1,4 @@
-name: Notas
+name: notas
 base: core24
 version: '2.0.0'
 summary: Secure, lightweight, encrypted note-taking application.
@@ -12,7 +12,7 @@ confinement: strict
 
 apps:
   Notas:
-    command: desktop-launch $SNAP/bin/Notas
+    command: desktop-launch $SNAP/bin/notas
     extensions: [gnome]
     plugs:
       - home
