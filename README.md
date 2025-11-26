@@ -1,7 +1,25 @@
+
 <p align="center">
-  <img src="https://raw.githubusercontent.com/globalcve/Notas/main/Notas-Animated.gif" 
-       alt="Notas Cube Animation" 
-       style="width: 150px; height: 100px;">
+  <img src="assets/Notas-Animated.gif" alt="Notas Animation" />
+</p>
+
+
+---
+
+## Unlock
+
+<p align="center">
+  <img src="assets/Welcome_Screen_Dark.png" alt="Welcome Dark" width="45%"/>
+  <img src="assets/Welcome_Screen_White.png" alt="Welcome White" width="45%"/>
+</p>
+
+---
+
+## UI
+
+<p align="center">
+  <img src="assets/Darkmode.png" alt="Dark Mode" width="45%"/>
+  <img src="assets/Lightmode.png" alt="Light Mode" width="45%"/>
 </p>
 
 <p align="center">
