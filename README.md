@@ -6,7 +6,7 @@
 
 ---
 
-## Unlock
+
 
 <p align="center">
   <img src="assets/Welcome_Screen_Dark.png" alt="Welcome Dark" width="45%"/>
@@ -15,7 +15,7 @@
 
 ---
 
-## UI
+
 
 <p align="center">
   <img src="assets/Darkmode.png" alt="Dark Mode" width="45%"/>
