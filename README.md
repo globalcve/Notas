@@ -58,6 +58,6 @@ sudo apt remove notas
 
 ## License
 
-Copyright © 2025 Jegly. All rights reserved.
+Copyright © 2025 JEGLY. All rights reserved.
 
 This software is provided for personal use only. Redistribution, modification, or commercial use of the source code is prohibited without written permission.
