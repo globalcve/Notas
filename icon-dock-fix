@@ -1,0 +1,44 @@
+Fix: Notas showing gear icon in dock (GNOME/Wayland)
+
+
+If Notas displays a generic gear icon instead of its proper icon in the dock, add the missing StartupWMClass to the desktop file:
+
+
+cp /usr/share/applications/notas.desktop ~/.local/share/applications/
+nano ~/.local/share/applications/notas.desktop
+
+
+
+Add this line after StartupNotify=true:
+
+
+StartupWMClass=com.jegly.Notas
+
+
+
+Complete file should look like:
+
+
+[Desktop Entry]
+Name=Notas
+GenericName=Encrypted Notes
+Comment=Secure encrypted notes application
+Exec=notas
+Icon=/usr/share/icons/hicolor/256x256/apps/notas.png
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;Security;
+Keywords=notes;encrypted;secure;private;
+StartupNotify=true
+StartupWMClass=com.jegly.Notas
+
+
+
+Update the desktop database:
+
+
+update-desktop-database ~/.local/share/applications/
+
+
+
+Restart Notas and the correct icon should now appear in the dock.
