@@ -14,8 +14,8 @@
 ---
 
 <p align="center">
-<img src="assets/Darkmode.png" alt="Dark Mode" width="45%"/>
-<img src="assets/Lightmode.png" alt="Light Mode" width="45%"/>
+<img src="assets/Darkmode.png" alt="Dark Mode" width="70%"/>
+<img src="assets/Lightmode.png" alt="Light Mode" width="70%"/>
 </p>
 
 <p align="center">
