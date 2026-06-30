@@ -206,10 +206,59 @@ impl Default for Argon2Params {
     }
 }
 
+// Key-derivation strength. This is FIXED at Strong for every vault and is not
+// user-selectable: Paranoid (256 MiB) caused multi-second UI freezes during the
+// synchronous re-encrypt, and exposing the choice invited that footgun. Balanced
+// (OWASP min) and Paranoid remain defined for reference / possible future use,
+// but `AppSettings` always derives keys at Strong.
+#[derive(Debug, Clone, PartialEq)]
+#[allow(dead_code)] // Balanced/Paranoid kept for reference; only Strong is used.
+pub enum KdfStrength {
+    /// 19 MiB, t=2 — OWASP minimum.
+    Balanced,
+    /// 64 MiB, t=3 — the fixed default. Strong margin, ~0.3s derive.
+    Strong,
+    /// 256 MiB, t=4 — strongest, but ~1.4s/derive (caused UI freezes).
+    Paranoid,
+}
+
+impl KdfStrength {
+    /// The Argon2id parameters this strength maps to.
+    pub fn params(&self) -> Argon2Params {
+        match self {
+            KdfStrength::Balanced => Argon2Params { memory_cost: 19456,  time_cost: 2, parallelism: 1 },
+            KdfStrength::Strong   => Argon2Params { memory_cost: 65536,  time_cost: 3, parallelism: 1 },
+            KdfStrength::Paranoid => Argon2Params { memory_cost: 262144, time_cost: 4, parallelism: 1 },
+        }
+    }
+}
+
+// Vault encryption mode. Selected by the user; the on-disk format is
+// self-describing, so unlocking auto-detects which mode a vault uses
+// regardless of this setting.
+#[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
+pub enum EncryptionMode {
+    /// Single-layer AES-256-GCM (original Notas format).
+    Single,
+    /// Password-gated 3-layer AEAD cascade (tesseract-core file mode):
+    /// AES-256-GCM -> ChaCha20-Poly1305 -> AES-256-GCM-SIV, each layer keyed
+    /// independently. Quantum-resistant.
+    Cascade,
+}
+
+impl Default for EncryptionMode {
+    fn default() -> Self {
+        // Cascade is the default: strongest protection out of the box.
+        EncryptionMode::Cascade
+    }
+}
+
 #[derive(Debug, Serialize, Deserialize, Clone, PartialEq)]
 pub enum AppTheme {
     Dark,
     Light,
+    /// A palette ported from the tesseract UI, identified by its palette id.
+    Palette(String),
 }
 
 impl Default for AppTheme {
@@ -322,6 +371,9 @@ pub struct AppSettings {
     /// Argon2 parameters
     #[serde(default)]
     pub argon2_params: Argon2Params,
+    /// Vault encryption mode (single AES-GCM vs. cascade)
+    #[serde(default)]
+    pub encryption_mode: EncryptionMode,
     /// UI Theme
     #[serde(default)]
     pub theme: AppTheme,
@@ -334,6 +386,26 @@ pub struct AppSettings {
     /// Show note title field
     #[serde(default = "default_true")]
     pub show_note_title: bool,
+    /// Show the "Notas" logo/wordmark in the sidebar header
+    #[serde(default = "default_true")]
+    pub show_app_logo: bool,
+    /// Show the first-line preview under each note in the sidebar
+    #[serde(default = "default_true")]
+    pub show_note_previews: bool,
+    /// Show the word & character count in the editor status bar
+    #[serde(default = "default_true")]
+    pub show_word_count: bool,
+    /// Optional custom editor text colour as a "#rrggbb" hex string (None =
+    /// follow the theme). Ignored while rainbow mode is on.
+    #[serde(default)]
+    pub editor_text_color: Option<String>,
+    /// Rainbow ("lolcat") editor text — per-character hue cycling.
+    #[serde(default)]
+    pub rainbow_text: bool,
+    /// Minimal mode: start with the sidebar note-list collapsed (switch notes via
+    /// the top-bar dropdown). The sidebar can still be toggled back with ☰.
+    #[serde(default)]
+    pub minimal_mode: bool,
 }
 
 fn default_true() -> bool {
@@ -350,11 +422,21 @@ impl Default for AppSettings {
             auto_lock_timeout: 300, // 5 minutes default
             clipboard_timeout: 30,  // 30 seconds default
             custom_db_path: None,
-            argon2_params: Argon2Params::default(),
+            // Every vault derives keys at Strong (64 MiB). FIXED, not
+            // user-selectable. We do NOT touch Argon2Params::default() (kept at
+            // 19456) because the legacy key cache uses it on every unlock.
+            argon2_params: KdfStrength::Strong.params(),
+            encryption_mode: EncryptionMode::Cascade,
             theme: AppTheme::Dark,
             editor_font: EditorFont::default(),
             editor_font_size: 12,
             show_note_title: true,
+            show_app_logo: true,
+            show_note_previews: true,
+            show_word_count: true,
+            editor_text_color: None,
+            rainbow_text: false,
+            minimal_mode: false,
         }
     }
 }
@@ -438,5 +520,27 @@ impl Drop for SecureBuffer {
 impl Zeroize for SecureBuffer {
     fn zeroize(&mut self) {
         self.data.zeroize();
+    }
+}
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn kdf_preset_param_values() {
+        assert_eq!(KdfStrength::Balanced.params().memory_cost, 19456);
+        assert_eq!(KdfStrength::Strong.params().memory_cost, 65536);
+        assert_eq!(KdfStrength::Strong.params().time_cost, 3);
+        assert_eq!(KdfStrength::Paranoid.params().memory_cost, 262144);
+    }
+
+    #[test]
+    fn settings_default_is_strong_but_argon_fn_default_is_not() {
+        // The fixed settings default derives keys at Strong (64 MiB) ...
+        assert_eq!(AppSettings::default().argon2_params.memory_cost, 65536);
+        // ... but Argon2Params::default() stays at 19456 (used by the legacy key
+        // cache on every unlock; raising it would slow every unlock).
+        assert_eq!(Argon2Params::default().memory_cost, 19456);
     }
 }
