@@ -38,12 +38,12 @@
 ```
 
 ---
-sha256:c13e32c318bc666e0e1c5fc86cf2b5d364a477a14db4fd3194c5d81792dda732
+sha256:5266070a1926a86ed3e6647c2f43dca209af2261b90e29da61e67a28c8d3a048
 
 ## INSTALL
 
 ```bash
-sudo dpkg -i notas_3.1.1_amd64.deb 
+sudo dpkg -i notas_3.2.1_amd64.deb 
 ```
 
 ```
