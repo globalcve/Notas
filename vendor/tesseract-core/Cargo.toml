@@ -1,0 +1,80 @@
+[package]
+name = "tesseract-core"
+# Vendored into Notas from the Tesseract workspace (github.com/jegly/Tesseract,
+# tesseract-core, workspace version 0.1.0). Workspace inheritance (`workspace = true`)
+# has been resolved to the concrete versions from that workspace's
+# [workspace.package] / [workspace.dependencies] tables so the crate builds
+# standalone here, with no external path back to the Tesseract project.
+version = "0.1.0"
+edition = "2021"
+license = "GPL-3.0-or-later"
+authors = ["jegly <jjjegly@gmail.com>"]
+description = "Tesseract cryptographic core: cascade engine, keyslots, headers, HPKE file mode. Pure Rust, no OS calls."
+
+[features]
+default = []
+# Non-standardized / less-reviewed primitives. Per-volume opt-in, labeled in the GUI.
+experimental = [
+    "dep:threefish",
+    "dep:kuznyechik",
+    "dep:sm4",
+    "dep:aria",
+    "dep:adiantum",
+    "dep:whirlpool",
+    "dep:streebog",
+    "dep:balloon-hash",
+    "dep:sha2_010",
+]
+
+[dependencies]
+# symmetric
+aes = "0.9"
+serpent = "0.6"
+twofish = "0.8"
+camellia = "0.2"
+chacha20 = { version = "0.10", features = ["xchacha", "zeroize"] }
+xts-mode = "0.6"
+cipher = "0.5"
+threefish = { version = "0.6", optional = true }
+kuznyechik = { version = "0.9", optional = true }
+sm4 = { version = "0.6", optional = true }
+aria = { version = "0.2", optional = true }
+adiantum = { version = "0.2", optional = true }
+
+# AEAD
+chacha20poly1305 = "0.10"
+aes-gcm-siv = "0.11"
+aes-gcm = "0.10"
+
+# hash / MAC / KDF
+sha2 = "0.11"
+sha3 = "0.12"
+blake3 = "1.8"
+blake2 = "0.10"
+whirlpool = { version = "0.11", optional = true }
+streebog = { version = "0.11", optional = true }
+hkdf = "0.13"
+hmac = "0.13"
+digest = "0.11"
+argon2 = "0.5"
+scrypt = { version = "0.12", default-features = false }
+pbkdf2 = { version = "0.13", default-features = false }
+balloon-hash = { version = "0.4", optional = true }
+sha2_010 = { package = "sha2", version = "0.10", optional = true }
+tiny-keccak = { version = "2.0", features = ["kmac"] }
+
+# asymmetric / PQ
+ml-kem = { version = "0.3", features = ["hazmat"] }
+ml-dsa = "0.1"
+x25519-dalek = { version = "2.0", features = ["static_secrets", "zeroize"] }
+ed25519-dalek = { version = "2.2", features = ["zeroize", "rand_core"] }
+
+# support
+subtle = "2.6"
+zeroize = { version = "1.8", features = ["zeroize_derive"] }
+minicbor = { version = "2.2", features = ["derive", "alloc"] }
+hex = "0.4"
+thiserror = "2"
+
+[dev-dependencies]
+hex-literal = "1"

@@ -1,0 +1,22 @@
+# Rust build output
+/target/
+
+# Debian package build artifacts
+notas_*_amd64/
+notas_*_arm64/
+*.deb
+
+# User data / runtime files
+*.dat
+*.redirect
+
+# Editor files
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS files
+.DS_Store
+Thumbs.db

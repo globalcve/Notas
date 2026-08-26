@@ -1,0 +1,90 @@
+[package]
+name = "notas"
+version = "3.2.1"
+edition = "2021"
+license = "MIT"
+description = "Secure, lightweight, encrypted note-taking application."
+authors = ["JEGLY"]
+
+[package.metadata.deb]
+maintainer = "JEGLY"
+section = "utils"
+priority = "optional"
+assets = [
+    # Install binary
+    ["target/release/notas", "usr/bin/notas", "755"],
+    # Desktop entry
+    ["notas.desktop", "usr/share/applications/", "644"],
+    # Icon
+    ["notas.svg", "usr/share/icons/hicolor/scalable/apps/", "644"],
+]
+
+# Optimize dependencies even in debug builds. Argon2 (and the cascade AEADs) are
+# memory-hard / CPU-heavy; unoptimized they run ~20x slower, which made a Paranoid
+# KDF take ~29s and freeze the UI when running the debug binary. Our own crate
+# stays unoptimized for fast incremental builds; only deps get opt-level 2.
+[profile.dev.package."*"]
+opt-level = 2
+
+# Ship the release binary without debug symbols. The tray's D-Bus stack (zbus)
+# roughly tripled the symbol payload in 3.2.0; stripping cuts ~2 MB off the
+# installed binary and costs nothing at runtime.
+[profile.release]
+strip = "symbols"
+
+[dependencies]
+# GUI
+gtk4 = { version = "0.7", package = "gtk4", features = ["v4_8"] }
+libadwaita = { version = "0.5", features = ["v1_4"] }
+# Asynchronous runtime
+tokio = { version = "1", features = ["full"] }
+async-channel = "2.3"
+# System tray via the freedesktop StatusNotifierItem protocol (what GNOME's
+# ubuntu-appindicators extension consumes). Pure Rust over zbus — NOT
+# libappindicator, which is GTK3 and would drag a second, incompatible GTK into
+# this process. Runs its own thread + executor, independent of the tokio runtime
+# above. The "blocking" feature gives a non-async spawn so the GTK main thread
+# never awaits it.
+ksni = { version = "0.3", features = ["blocking"] }
+# Serialization
+serde = { version = "1.0", features = ["derive"] }
+serde_json = "1.0"
+bincode = "1.3"
+# Cryptography
+argon2 = "0.5"
+aes-gcm = "0.10"
+rand = "0.9"
+# Quantum-resistant cascade engine (ported from tesseract). Pure Rust, no extra
+# system deps. Path dep into the tesseract workspace; switch to a pinned git rev
+# for reproducible release builds.
+tesseract-core = { path = "vendor/tesseract-core" }
+# toolkit.py text operations (encoders / hashes) for the editor right-click menu —
+# native, pure-Rust, offline (no Python / no runtime deps).
+base64 = "0.22"
+hex = "0.4"
+sha2 = "0.10"
+sha1 = "0.10"
+md-5 = "0.10"
+crc32fast = "1.4"
+# Utilities
+chrono = { version = "0.4", features = ["serde"] }
+dirs = "5.0"
+anyhow = "1.0"
+once_cell = "1.19"
+zeroize = { version = "1.7", features = ["zeroize_derive"] }
+# Memory locking + process hardening (seccomp, prctl, rlimits)
+libc = "0.2"
+# seccomp-bpf filter compiler (Firecracker's). Pure Rust — no libseccomp C dep —
+# and its only deps (libc, serde, serde_json) are already in the tree.
+seccompiler = "0.5"
+# PNG decoding for the tray icon. Deliberately NOT gdk-pixbuf: on GTK 4.22 image
+# loading goes through glycin, which decodes in a sandboxed *subprocess* and so
+# needs execve — the very syscall the seccomp filter blocks. A pure-Rust decoder
+# keeps that block intact and works whatever order hardening runs in.
+png = "0.18"
+
+[dev-dependencies]
+# Test-only: re-derives the normalization properties of the curated password
+# character tables in src/unipass.rs, so they cannot silently rot. Never ships in
+# the binary — the tables are pre-filtered offline and compiled in as ranges.
+unicode-normalization = "0.1"

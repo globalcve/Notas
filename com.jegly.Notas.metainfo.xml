@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component type="desktop-application">
+  <id>com.jegly.Notas</id>
+  <metadata_license>CC0-1.0</metadata_license>
+  <project_license>MIT</project_license>
+  <name>Notas</name>
+  <summary>Secure encrypted notes application</summary>
+  <description>
+    <p>
+      Notas is a privacy-focused encrypted notes application built with GTK4 and Rust. 
+      All your notes are encrypted locally using AES-256-GCM encryption and never leave your device.
+    </p>
+    <p>Features:</p>
+    <ul>
+      <li>AES-256-GCM encryption for all notes</li>
+      <li>Argon2id key derivation for maximum security</li>
+      <li>Auto-lock with configurable timeout</li>
+      <li>Automatic clipboard clearing</li>
+      <li>Beautiful dark and light themes</li>
+      <li>14 customizable font families</li>
+      <li>macOS-style traffic light window controls</li>
+      <li>Secure import/export functionality</li>
+    </ul>
+  </description>
+  <launchable type="desktop-id">notas.desktop</launchable>
+  <url type="homepage">https://github.com/jegly/notas</url>
+  <url type="bugtracker">https://github.com/jegly/notas/issues</url>
+  <developer_name>Jegly</developer_name>
+  <provides>
+    <binary>notas</binary>
+  </provides>
+  <content_rating type="oars-1.1" />
+  <releases>
+    <release version="1.0.0" date="2025-11-26">
+      <description>
+        <p>Initial release with full encryption support.</p>
+      </description>
+    </release>
+  </releases>
+  <screenshots>
+    <screenshot type="default">
+      <caption>Main window with dark theme</caption>
+      <image>https://raw.githubusercontent.com/jegly/notas/main/screenshots/main.png</image>
+    </screenshot>
+  </screenshots>
+  <categories>
+    <category>Utility</category>
+    <category>TextEditor</category>
+    <category>Security</category>
+  </categories>
+  <keywords>
+    <keyword>notes</keyword>
+    <keyword>encrypted</keyword>
+    <keyword>secure</keyword>
+    <keyword>private</keyword>
+    <keyword>password</keyword>
+  </keywords>
+</component>

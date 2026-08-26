@@ -1,0 +1,15 @@
+notas (1.0.0-1) stable; urgency=medium
+
+  * Initial release
+  * Secure AES-256-GCM encryption for all notes
+  * Argon2id key derivation with configurable parameters
+  * GTK4 + libadwaita modern UI with custom header bar
+  * macOS-style traffic light window controls
+  * Dark and light theme support
+  * 14 font families with customizable sizes
+  * Auto-lock with configurable timeout
+  * Automatic clipboard clearing
+  * Secure import/export functionality
+  * Toggle for note title visibility
+
+ -- Jegly <jjjegly@gmail.com>  Tue, 26 Nov 2025 12:00:00 +0000

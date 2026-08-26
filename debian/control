@@ -1,0 +1,32 @@
+Source: notas
+Section: utils
+Priority: optional
+Maintainer: Jegly <jegly@example.com>
+Build-Depends: debhelper (>= 13),
+               cargo,
+               rustc,
+               libgtk-4-dev,
+               libadwaita-1-dev,
+               pkg-config
+Standards-Version: 4.6.0
+Homepage: https://github.com/jegly/notas
+
+Package: notas
+Architecture: any
+Depends: ${shlibs:Depends},
+         ${misc:Depends},
+         libgtk-4-1,
+         libadwaita-1-0
+Description: Secure encrypted notes application
+ Notas is a privacy-focused encrypted notes application built with
+ GTK4 and Rust. It features:
+ .
+  * AES-256-GCM encryption for all notes
+  * Argon2id key derivation
+  * Auto-lock with configurable timeout
+  * Automatic clipboard clearing
+  * Dark and light themes
+  * Customizable editor fonts
+  * Import/export functionality
+ .
+ Your notes are encrypted locally and never leave your device.

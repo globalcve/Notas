@@ -1,0 +1,37 @@
+#!/usr/bin/make -f
+
+%:
+	dh $@
+
+override_dh_auto_build:
+	cargo build --release
+
+override_dh_auto_install:
+	# Install binary
+	install -Dm755 target/release/notas debian/notas/usr/bin/notas
+	
+	# Install desktop file
+	install -Dm644 notas.desktop debian/notas/usr/share/applications/notas.desktop
+	
+	# Install icons
+	install -Dm644 icons/hicolor/16x16/apps/notas.png debian/notas/usr/share/icons/hicolor/16x16/apps/notas.png
+	install -Dm644 icons/hicolor/32x32/apps/notas.png debian/notas/usr/share/icons/hicolor/32x32/apps/notas.png
+	install -Dm644 icons/hicolor/48x48/apps/notas.png debian/notas/usr/share/icons/hicolor/48x48/apps/notas.png
+	install -Dm644 icons/hicolor/64x64/apps/notas.png debian/notas/usr/share/icons/hicolor/64x64/apps/notas.png
+	install -Dm644 icons/hicolor/128x128/apps/notas.png debian/notas/usr/share/icons/hicolor/128x128/apps/notas.png
+	install -Dm644 icons/hicolor/256x256/apps/notas.png debian/notas/usr/share/icons/hicolor/256x256/apps/notas.png
+	install -Dm644 icons/hicolor/512x512/apps/notas.png debian/notas/usr/share/icons/hicolor/512x512/apps/notas.png
+	
+	# Install metainfo
+	install -Dm644 com.jegly.Notas.metainfo.xml debian/notas/usr/share/metainfo/com.jegly.Notas.metainfo.xml
+	
+	# Install font if present
+	if [ -f fonts/DotGothic16-Regular.ttf ]; then \
+		install -Dm644 fonts/DotGothic16-Regular.ttf debian/notas/usr/share/fonts/truetype/notas/DotGothic16-Regular.ttf; \
+	fi
+
+override_dh_auto_clean:
+	cargo clean || true
+
+override_dh_auto_test:
+	# Skip tests during packaging

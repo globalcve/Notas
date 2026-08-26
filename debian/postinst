@@ -1,0 +1,21 @@
+#!/bin/sh
+set -e
+
+# Update icon cache
+if [ -x /usr/bin/gtk-update-icon-cache ]; then
+    gtk-update-icon-cache -f -t /usr/share/icons/hicolor || true
+fi
+
+# Update desktop database
+if [ -x /usr/bin/update-desktop-database ]; then
+    update-desktop-database /usr/share/applications || true
+fi
+
+# Update font cache for bundled DotGothic16 font
+if [ -x /usr/bin/fc-cache ]; then
+    fc-cache -f /usr/share/fonts/truetype/notas || true
+fi
+
+#DEBHELPER#
+
+exit 0

@@ -1,0 +1,12 @@
+[Desktop Entry]
+Name=Notas
+GenericName=Encrypted Notes
+Comment=Secure encrypted notes application
+Exec=notas
+Icon=/usr/share/icons/hicolor/256x256/apps/notas.png
+Terminal=false
+Type=Application
+Categories=Utility;TextEditor;Security;
+Keywords=notes;encrypted;secure;private;
+StartupNotify=true
+StartupWMClass=com.jegly.Notas

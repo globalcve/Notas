@@ -1,0 +1,32 @@
+#!/bin/sh
+set -e
+
+# Update icon cache after removal
+if [ -x /usr/bin/gtk-update-icon-cache ]; then
+    gtk-update-icon-cache -f -t /usr/share/icons/hicolor 2>/dev/null || true
+fi
+
+# Update desktop database
+if [ -x /usr/bin/update-desktop-database ]; then
+    update-desktop-database /usr/share/applications 2>/dev/null || true
+fi
+
+# Update font cache after removal
+if [ -x /usr/bin/fc-cache ]; then
+    fc-cache -f 2>/dev/null || true
+fi
+
+# Remove user data and config so a reinstall starts clean.
+# Without this, a new master password fails to decrypt the old vault.
+REAL_USER="${SUDO_USER:-$(logname 2>/dev/null || true)}"
+if [ -n "$REAL_USER" ]; then
+    USER_HOME=$(getent passwd "$REAL_USER" | cut -d: -f6)
+    if [ -n "$USER_HOME" ]; then
+        rm -rf "$USER_HOME/.local/share/notas"
+        rm -rf "$USER_HOME/.config/notas"
+    fi
+fi
+
+#DEBHELPER#
+
+exit 0
