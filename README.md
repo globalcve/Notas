@@ -31,18 +31,19 @@
 │  A minimalist, secure note-taking application for Linux.                │
 │  Built with Rust and GTK4.                                              │
 │                                                                         │
-│  AES-256 encryption and password protection at startup.                 │
-│  Nothing leaves your device. No ads. No tracking. No internet.         │
+│  Encrypted with Tesseract — my own cascade crypto core.                 │
+│  Three layered ciphers. Argon2id key derivation.                        │
+│  Nothing leaves your device. No ads. No tracking. No internet.          │
 └─────────────────────────────────────────────────────────────────────────┘
 ```
 
 ---
-sha256:9facdbe38949000eb668707a7d6212746959131a46a827120ee67a045679834e
+sha256:c13e32c318bc666e0e1c5fc86cf2b5d364a477a14db4fd3194c5d81792dda732
 
 ## INSTALL
 
 ```bash
-sudo dpkg -i notas_3.0.0_amd64.deb 
+sudo dpkg -i notas_3.1.1_amd64.deb 
 ```
 
 ```
@@ -77,16 +78,17 @@ sudo apt install pkg-config libgtk-4-dev libadwaita-1-dev rustup
 ┌─────────────────────────────────────────────────────────┬───────────────────────────────────────────────────┐
 │  FEATURE                                                │  DETAIL                                           │
 ├─────────────────────────────────────────────────────────┼───────────────────────────────────────────────────┤
-│  Encryption                                             │  AES-256-GCM for all notes                        │
-│  Key derivation                                         │  Argon2id — memory-hard, GPU/brute-force resistant │
-│  Salt                                                   │  Unique cryptographically random salt per vault   │
+│  Crypto core                                            │  Tesseract — my own cascade engine                │
+│  Encryption                                             │  AES-256-GCM → ChaCha20-Poly1305 → AES-256-GCM-SIV│
+│  Key derivation                                         │  Argon2id — Strong (64MiB) / Paranoid (256MiB)    │
+│  Salt                                                   │  Unique random salt per vault, stored in header   │
 │  Nonce                                                  │  Fresh random nonce on every write, no reuse      │
 │  Memory                                                 │  Decrypted content zeroed when app locks          │
 │  Swap protection                                        │  mlock — key material pinned in RAM               │
 │  Auto-lock                                              │  Configurable inactivity timeout                  │
 │  Clipboard                                              │  Auto-clear after copying sensitive content       │
-│  Uninstall                                              │  Vault and config wiped on removal                │
-│  Network                                               │  Zero — nothing leaves your device                │
+│  Portability                                            │  Password-only unlock, no machine binding         │
+│  Network                                                │  Zero — nothing leaves your device                │
 └─────────────────────────────────────────────────────────┴───────────────────────────────────────────────────┘
 ```
 

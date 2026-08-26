@@ -20,3 +20,6 @@ notas_*_arm64/
 # OS files
 .DS_Store
 Thumbs.db
+
+# Internal dev notes — not for publish
+HANDOFF_CLAUDE.md
